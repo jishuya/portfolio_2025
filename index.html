@@ -21,7 +21,7 @@
      <script src="https://kit.fontawesome.com/5370afdb2f.js" crossorigin="anonymous"></script>
      <!-- javascript, css -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="src/main.js" defer></script> 
+    <script type="module" src="src/main.js" defer></script> 
 </head>
 <body>
     <!-- Header -->
@@ -42,7 +42,7 @@
         </nav>
     </header>
     <!-- Main -->
-    <main></main>
+    <main>
         <!-- Home -->
         <section id="home">
             <img class="home__avatar" src="images/profile-bg.png" alt="jisoo's profile">
@@ -87,173 +87,257 @@
                     </div>
                 </li>
             </ul>
+        </section>
         <!-- Skills -->
-        <section id="skills"></section>
-            <h2>My Skills</h2>
-            <p>Skills & Attributes</p>
-            <p>내가 가지고 있는 skill들과 장점, 프로그래밍에 관련된 것들</p>
-            <div>
-                <section>
-                    <h3>Coding Skills</h3>
-                    <ul>
-                        <li>
-                            <div><span>HTML</span><span>100%</span></div>
-                            <div><div style="width: 100%;"></div></div>
-                        </li>
-                        <li>
-                            <div><span>CSS</span><span>92%</span></div>
-                            <div><div style="width: 92%;"></div></div>
-                        </li>
-                        <li>
-                            <div><span>Javascript</span><span>100%</span></div>
-                            <div><div style="width: 100%;"></div></div>
-                        </li>
-                        <li>
-                            <div><span>Vue</span><span>95%</span></div>
-                            <div><div style="width: 95%;"></div></div>
-                        </li>
-                        <li>
-                            <div><span>NodeJs</span><span>80%</span></div>
-                            <div><div style="width: 80%;"></div></div>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Tools</h3>
+        <section id="skills" class="section">
+            <div class="max-container">
+                <h2 class="title">My Skills</h2>
+                <p class="description">Skills & Attributes</p>
+                <p>내가 가지고 있는 skill들과 장점, 프로그래밍에 관련된 것들</p>
+                <div class="skills">
+                    <section class="skills__coding">
+                        <h3 class="skills__title">Coding Skills</h3>
                         <ul>
-                            <li>Visual Studio Code</li>
-                            <li>Npm</li>
-                            <li>Yarn</li>
-                            <li>Chrome DevTools</li>
+                            <li class="bar">
+                                <div class="bar__metadata"><span>HTML</span><span>100%</span></div>
+                                <div class="bar__bg"><div class="bar__value" style="width: 100%;"></div></div>
+                            </li>
+                            <li class="bar">
+                                <div class="bar__metadata"><span>CSS</span><span>92%</span></div>
+                                <div class="bar__bg"><div class="bar__value" style="width: 92%;"></div></div>
+                            </li>
+                            <li class="bar">
+                                <div class="bar__metadata"><span>Javascript</span><span>100%</span></div>
+                                <div class="bar__bg"><div class="bar__value" style="width: 100%;"></div></div>
+                            </li>
+                            <li class="bar">
+                                <div class="bar__metadata"><span>Vue</span><span>95%</span></div>
+                                <div class="bar__bg"><div class="bar__value" style="width: 95%;"></div></div>
+                            </li>
+                            <li class="bar">
+                                <div class="bar__metadata"><span>NodeJs</span><span>80%</span></div>
+                                <div class="bar__bg"><div class="bar__value" style="width: 80%;"></div></div>
+                            </li>
                         </ul>
-                </section>
-                <section>
-                    <h3>Etc</h3>
-                    <ul>
-                        <li>Git</li>
-                        <li>Docker</li>
-                        <li>Kubernetes</li>
-                    </ul>
-                </section>    
+                    </section>
+                    <section class="skills__tools">
+                        <h3 class="skills__title">Tools</h3>
+                            <ul>
+                                <li>Visual Studio Code</li>
+                                <li>Npm</li>
+                                <li>Yarn</li>
+                                <li>Chrome DevTools</li>
+                            </ul>
+                    </section>
+                    <section class="skills__etc">
+                        <h3 class="skills__title">Etc</h3>
+                        <ul>
+                            <li>Git</li>
+                            <li>Docker</li>
+                            <li>Kubernetes</li>
+                        </ul>
+                    </section>    
+                </div>
             </div>
+        </section>
         <!-- Work -->
-        <section id="work">
-            <h2>My Work</h2>
-            <p>Projects</p>
-            <ul>
+        <section id="work" class="section">
+            <div class="max-container">
+            <h2 class="title">My work</h2>
+            <p class="description">Projects</p>
+            <ul class="categories">
                 <li>
-                    <button>All <span>4</span></button>
+                <button class="category category--selected">
+                    All <span class="category__count">8</span>
+                </button>
                 </li>
                 <li>
-                    <button>Front-end <span>3</span></button>
+                <button class="category">
+                    Front-end <span class="category__count">3</span>
+                </button>
                 </li>
                 <li>
-                    <button>Back-end <span>2</span></button>
-                </li>
-                <li><button>Mobile <span>0</span></button>
-                </li>
-            </ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-            <ul>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project1</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
+                <button class="category">
+                    Back-end <span class="category__count">3</span>
+                </button>
                 </li>
                 <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project2</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project3</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project4</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project5</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project6</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project7</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <img src="/images/projects/youtube.png" alt="tas">
-                        <div>
-                            <h3>Project8</h3>
-                            <p>Traffic Analysis System</p>
-                        </div>
-                    </a>
+                <button class="category">
+                    Mobile <span class="category__count">2</span>
+                </button>
                 </li>
             </ul>
+            <ul class="projects">
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project1"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #1</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project2"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #2</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project3"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #3</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project4"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #4</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project5"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #5</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project6"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #6</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project7"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #7</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+                <li class="project">
+                <a href="#" target="_blank">
+                    <img
+                    src="images/projects/youtube.png"
+                    alt="project8"
+                    class="project__img"
+                    />
+                    <div class="project__metadata">
+                    <h3 class="project__title">Project #8</h3>
+                    <p>Clone Coding with HTML, CSS</p>
+                    </div>
+                </a>
+                </li>
+            </ul>
+            </div>
         </section>
         <!-- Testimonials -->
-        <section id="testimonial">
-            <h2>Testimonials</h2>
-            <p>See what they say about me</p>
-            <ul>
-                <li>
-                    <img src="/images/testimonial/people1.jpg" alt="people1">
-                    <div>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia sint, autem fuga assumenda ad nostrum nihil optio provident similique veritatis eius sunt doloremque sit delectus minus molestias laborum voluptas accusantium.</p>
-                        <p><a href="#">Jina</a> Samsung</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/images/testimonial/people2.jpg" alt="people2">
-                    <div>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia sint, autem fuga assumenda ad nostrum nihil optio provident similique veritatis eius sunt doloremque sit delectus minus molestias laborum voluptas accusantium.</p>
-                        <p><a href="#">Jina</a> Samsung</p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/images/testimonial/people3.jpg" alt="people3">
-                    <div>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia sint, autem fuga assumenda ad nostrum nihil optio provident similique veritatis eius sunt doloremque sit delectus minus molestias laborum voluptas accusantium.</p>
-                        <p><a href="#">Jina</a> Samsung</p>
-                    </div>
-                </li>
+        <section id="testimonial" class="section max-container">
+            <h2 class="title">Activities</h2>
+            <p class="description">내가 한 특별 활동들</p>
+            <ul class="testimonials">
+            <li class="testimonial">
+                <img
+                src="images/testimonial/people1.jpg"
+                alt="people1"
+                class="testimonial__img"
+                />
+                <div class="testimonial__bubble">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem ad
+                    iusto, ea alias, at sit libero laboriosam eaque eum, reiciendis
+                    obcaecati vitae non reprehenderit beatae officiis. Dolore
+                    corporis eveniet labore.
+                </p>
+                <p>
+                    <a href="#" class="testimonial__bubble__name">James Kim</a>
+                    /Google
+                </p>
+                </div>
+            </li>
+            <li class="testimonial">
+                <img
+                src="images/testimonial/people2.webp"
+                alt="people2"
+                class="testimonial__img"
+                />
+                <div class="testimonial__bubble">
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iure
+                    adipisci quibusdam perspiciatis neque consequuntur nostrum
+                    quisquam dolore consequatur voluptatum animi laborum, sequi
+                    ipsum rerum voluptatibus sit ab similique quos velit?
+                </p>
+                <p>
+                    <a href="#" class="testimonial__bubble__name">Anna Jin</a>
+                    /Samsung
+                </p>
+                </div>
+            </li>
+            <li class="testimonial">
+                <img
+                src="images/testimonial/people3.webp"
+                alt="people3"
+                class="testimonial__img"
+                />
+                <div class="testimonial__bubble">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Perferendis, mollitia. Fugiat recusandae unde ducimus harum
+                    voluptas earum reiciendis expedita inventore quas ab eum
+                    dignissimos, maiores deleniti officiis qui, repudiandae
+                    voluptatibus?
+                </p>
+                <p>
+                    <a href="#" class="testimonial__bubble__name">Anna Jin</a>
+                    /Samsung
+                </p>
+                </div>
+            </li>
             </ul>
         </section>
         <!-- Arrow up -->
@@ -262,25 +346,36 @@
                 <i class="fa-solid fa-arrow-up"></i>
             </a>
         </aside>
+    </main>
     <!-- Footer -->
-     <footer id="contact">
-        <div class="max-container">
-            <h2>Let&#39;s talk</h2>
-            <p>jishuya3015@gmail.com</p>
-            <ul>
-                <li>
-                    <a class="contact__link" href="https://github.com/jishuya" target="_blank" title="my github">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="contact__link" href="https://github.com/jishuya" target="_blank" title="my linkedin">
-                        <i class="fa-brands fa-linkedin"></i>
-                    </a>
-                </li>
-            </ul>
-            <p>ⓒJishu - All rights reserved</p>
-        </div>
-     </footer>
+     <footer id="contact" class="section">
+      <div class="max-container">
+        <h2 class="title">Let&#39;s talk</h2>
+        <p class="description">jishuya3015@gmail.com</p>
+        <ul class="contact__links">
+          <li>
+            <a
+              class="contact__link"
+              href="https://github.com/dream-ellie"
+              target="_blank"
+              title="my github link"
+            >
+              <i class="fa-brands fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              class="contact__link"
+              href="https://github.com/dream-ellie"
+              target="_blank"
+              title="my linkedin link"
+            >
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+        <p>ⓒjishu - All rights reserved</p>
+      </div>
+    </footer>
 </body>
 </html>
