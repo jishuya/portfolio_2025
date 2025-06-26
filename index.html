@@ -21,7 +21,8 @@
      <script src="https://kit.fontawesome.com/5370afdb2f.js" crossorigin="anonymous"></script>
      <!-- javascript, css -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="src/main.js" defer></script> 
+    <script type="module" src="src/main.js" defer></script> 
+    <script type="module" src="src/projects.js" defer></script> 
 </head>
 <body>
     <!-- Header -->
@@ -40,6 +41,9 @@
                 <li><a class="header__menu__item" href="#contact">Contact</a></li>
             </ul>
         </nav>
+        <button class="header__toggle" aria-label="navigation menu toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
     </header>
     <!-- Main -->
     <main>
@@ -150,28 +154,28 @@
             <p class="description">Projects</p>
             <ul class="categories">
                 <li>
-                <button class="category category--selected">
+                <button class="category category--selected" data-category="all">
                     All <span class="category__count">8</span>
                 </button>
                 </li>
                 <li>
-                <button class="category">
+                <button class="category" data-category="front-end">
                     Front-end <span class="category__count">3</span>
                 </button>
                 </li>
                 <li>
-                <button class="category">
+                <button class="category" data-category="back-end">
                     Back-end <span class="category__count">3</span>
                 </button>
                 </li>
                 <li>
-                <button class="category">
+                <button class="category" data-category="mobile">
                     Mobile <span class="category__count">2</span>
                 </button>
                 </li>
             </ul>
             <ul class="projects">
-                <li class="project">
+                <li class="project" data-type="front-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -184,7 +188,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="front-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -197,7 +201,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="front-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -210,7 +214,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -223,7 +227,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -236,7 +240,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -249,7 +253,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
@@ -262,7 +266,7 @@
                     </div>
                 </a>
                 </li>
-                <li class="project">
+                <li class="project" data-type="mobile">
                 <a href="#" target="_blank">
                     <img
                     src="images/projects/youtube.png"
