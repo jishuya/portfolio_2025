@@ -15,6 +15,7 @@
 const skillsSection = document.querySelector('#skills');
 const bars = document.querySelectorAll('.bar__value');
 const percentTexts = document.querySelectorAll('.bar__percent');
+const skillItems = document.querySelectorAll('.skills__item');
 
 let hasAnimated = false;
 
@@ -66,6 +67,13 @@ function animateSkillBars() {
       animateCount(percentText, parseInt(percent), 1000);
     }, index * 100); // 각 바마다 100ms 딜레이
   });
+
+  // Tools, Etc 리스트 아이템 페이드인 애니메이션
+  skillItems.forEach((item, index) => {
+    setTimeout(() => {
+      item.classList.add('animate');
+    }, index * 80); // 각 아이템마다 80ms 딜레이
+  });
 }
 
 /**
@@ -76,6 +84,12 @@ function resetSkillBars() {
     bar.style.width = '0';
     percentTexts[index].textContent = '0%';
   });
+
+  // Tools, Etc 리스트 아이템 초기화
+  skillItems.forEach((item) => {
+    item.classList.remove('animate');
+  });
+
   hasAnimated = false;
 }
 
