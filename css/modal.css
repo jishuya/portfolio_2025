@@ -418,3 +418,7 @@
 .confirm-modal__btn--confirm:hover {
   background-color: var(--color-accent-variant);
 }
+
+.confirm-modal__btn--full {
+  width: 100%;
+}

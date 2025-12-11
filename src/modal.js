@@ -350,8 +350,7 @@ const securityModalHTML = `
     <div class="confirm-modal__content">
       <p class="confirm-modal__message">해당 프로젝트는 보안이슈로<br> 시연동영상으로 대체합니다.</p>
       <div class="confirm-modal__buttons">
-        <button class="confirm-modal__btn confirm-modal__btn--confirm">확인</button>
-        <button class="confirm-modal__btn confirm-modal__btn--cancel">취소</button>
+        <button class="confirm-modal__btn confirm-modal__btn--confirm confirm-modal__btn--full">확인</button>
       </div>
     </div>
   </div>
@@ -360,7 +359,6 @@ document.body.insertAdjacentHTML('beforeend', securityModalHTML);
 
 const securityModal = document.getElementById('securityModal');
 const securityOverlay = securityModal.querySelector('.confirm-modal__overlay');
-const securityCancel = securityModal.querySelector('.confirm-modal__btn--cancel');
 const securityConfirm = securityModal.querySelector('.confirm-modal__btn--confirm');
 let currentDemoLink = '';
 
@@ -389,7 +387,6 @@ modalLink.addEventListener('click', (e) => {
 });
 
 securityOverlay.addEventListener('click', closeSecurityModal);
-securityCancel.addEventListener('click', closeSecurityModal);
 securityConfirm.addEventListener('click', () => {
   if (currentDemoLink) {
     window.open(currentDemoLink, '_blank');
@@ -404,8 +401,7 @@ const loginModalHTML = `
     <div class="confirm-modal__content">
       <p class="confirm-modal__message">해당 프로젝트는 보안이슈로<br>가데이터를 사용하였습니다.<br><br><span id="loginCredentials"></span></p>
       <div class="confirm-modal__buttons">
-        <button class="confirm-modal__btn confirm-modal__btn--confirm">확인</button>
-        <button class="confirm-modal__btn confirm-modal__btn--cancel">취소</button>
+        <button class="confirm-modal__btn confirm-modal__btn--confirm confirm-modal__btn--full">확인</button>
       </div>
     </div>
   </div>
@@ -414,7 +410,6 @@ document.body.insertAdjacentHTML('beforeend', loginModalHTML);
 
 const loginModal = document.getElementById('loginModal');
 const loginOverlay = loginModal.querySelector('.confirm-modal__overlay');
-const loginCancel = loginModal.querySelector('.confirm-modal__btn--cancel');
 const loginConfirm = loginModal.querySelector('.confirm-modal__btn--confirm');
 const loginCredentials = document.getElementById('loginCredentials');
 let currentLoginLink = '';
@@ -431,7 +426,6 @@ function closeLoginModal() {
 }
 
 loginOverlay.addEventListener('click', closeLoginModal);
-loginCancel.addEventListener('click', closeLoginModal);
 loginConfirm.addEventListener('click', () => {
   if (currentLoginLink) {
     window.open(currentLoginLink, '_blank');

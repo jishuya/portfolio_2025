@@ -369,6 +369,8 @@ async function runSequence() {
   mainElement.innerHTML = '';
   subElement.innerHTML = '';
   subAfterElement.innerHTML = '';
+  mainCursor.style.display = 'none';
+  subCursor.style.display = 'none';
   isTyping = false;
 
   runSequence();
