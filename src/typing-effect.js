@@ -14,7 +14,7 @@ const typingSequence = [
   { main: 'Hello!', sub: '' },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: '' },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a front-end developer</strong>" },
-  { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong>", replaceRange: { from: 2, to: 11, newText: 'full-stack' } },
+  { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong>", replaceRange: { from: 2, to: 10, newText: 'full-stack' } },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong><br>with 4 years of experience" },
 ];
 
@@ -97,14 +97,14 @@ function buildHtmlUpToChar(html, charIndex) {
 
 /**
  * Build HTML after a specific character position
- * Preserves HTML tags properly
+ * Preserves HTML tags properly (including attributes like class)
  */
 function buildHtmlAfterChar(html, charIndex) {
   let result = '';
   let charCount = 0;
   let inTag = false;
   let tagBuffer = '';
-  const openTags = [];
+  const openTags = []; // Store full opening tags (with attributes)
   let foundStart = false;
 
   // First pass: find all tags that should be open at charIndex
@@ -125,10 +125,8 @@ function buildHtmlAfterChar(html, charIndex) {
           if (tagBuffer.startsWith('</')) {
             openTags.pop();
           } else if (!tagBuffer.endsWith('/>') && !tagBuffer.startsWith('<br')) {
-            const tagMatch = tagBuffer.match(/<(\w+)/);
-            if (tagMatch) {
-              openTags.push(tagMatch[1]);
-            }
+            // Store the full opening tag (with class and attributes)
+            openTags.push(tagBuffer);
           }
         }
         tagBuffer = '';
@@ -139,9 +137,9 @@ function buildHtmlAfterChar(html, charIndex) {
     charCount++;
   }
 
-  // Add opening tags that should wrap the remaining content
-  for (const tag of openTags) {
-    result += `<${tag}>`;
+  // Add opening tags that should wrap the remaining content (with original attributes)
+  for (const fullTag of openTags) {
+    result += fullTag;
   }
 
   // Second pass: get content after charIndex
@@ -267,9 +265,6 @@ async function typeTextRange(element, subAfter, cursor, beforeHtml, afterHtml, n
     await sleep(typingSpeed);
   }
 
-  // Merge back into single element
-  element.innerHTML = beforeHtml.replace(/<\/strong>$/, '') + newText + afterHtml.replace(/^<strong[^>]*>/, '');
-
   // Recalculate proper merged HTML
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = beforeHtml;
@@ -280,6 +275,18 @@ async function typeTextRange(element, subAfter, cursor, beforeHtml, afterHtml, n
   // Build final merged HTML
   const fullText = beforeText + newText + afterText;
   const targetHtml = `<strong class='home__title--strong'>${fullText}</strong>`;
+
+  // Move cursor from current position to end (character by character)
+  const currentPos = beforeText.length + newText.length - 1;
+  const endPos = fullText.length - 1;
+
+  for (let pos = currentPos; pos <= endPos; pos++) {
+    element.innerHTML = buildHtmlUpToChar(targetHtml, pos);
+    subAfter.innerHTML = buildHtmlAfterChar(targetHtml, pos);
+    await sleep(cursorMoveSpeed);
+  }
+
+  // Final state: all content in main element
   element.innerHTML = targetHtml;
   subAfter.innerHTML = '';
 }

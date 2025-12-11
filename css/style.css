@@ -175,7 +175,7 @@ button:focus {
 .typing-cursor {
   animation: blink 0.7s infinite;
   font-weight: normal;
-  color: var(--color-accent);
+  color: var(--color-white);
 }
 
 @keyframes blink {
