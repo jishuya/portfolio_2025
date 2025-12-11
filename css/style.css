@@ -171,8 +171,11 @@ button:focus {
   min-height: 3.5rem;
 }
 
+/* Custom typing cursor style */
 .typing-cursor {
   animation: blink 0.7s infinite;
+  font-weight: normal;
+  color: var(--color-accent);
 }
 
 @keyframes blink {

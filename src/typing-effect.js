@@ -1,226 +1,416 @@
 'use strict';
 
 /**
- * Typing Effect Module
+ * Custom Typing Effect with cursor movement and partial replacement
  *
- * [핵심 포인트 1] HTML 태그를 포함한 텍스트 처리
- * - 일반 텍스트만 타이핑하면 쉽지만, <strong>, <br> 같은 HTML 태그가 포함되면 복잡해짐
- * - 태그는 한 번에 추가하고, 실제 글자만 하나씩 타이핑해야 자연스러움
- * - buildHtmlUpToChar() 함수가 이 역할을 담당
- *
- * [핵심 포인트 2] 커서 위치 관리
- * - 여러 줄에서 타이핑할 때 커서가 현재 타이핑 중인 위치를 따라가야 함
- * - 메인/서브 텍스트 각각에 커서를 두고 display로 전환
- *
- * [핵심 포인트 3] 이어서 타이핑 vs 새로 타이핑
- * - "Hello" -> "Hello! I'm Jisoo" 처럼 이어질 때는 기존 텍스트 유지하고 뒤에만 추가
- * - startsWith()로 이전 텍스트가 현재 텍스트의 시작부분인지 확인
- * - startFrom 파라미터로 어디서부터 타이핑할지 지정
- *
- * [핵심 포인트 4] 비동기 처리 (async/await)
- * - 각 글자 타이핑 사이에 딜레이가 필요
- * - Promise와 setTimeout을 조합한 sleep() 함수 사용
- * - async/await로 순차적 실행 보장
+ * Features:
+ * - Character-by-character cursor movement
+ * - Partial text replacement (cursor moves to position, deletes range, types new text)
+ * - HTML tag preservation during all operations
  */
 
-// DOM Elements
-const typingText = document.querySelector('.typing-text');
-const typingTextSub = document.querySelector('.typing-text-sub');
-const cursorMain = document.querySelector('.typing-cursor--main');
-const cursorSub = document.querySelector('.typing-cursor--sub');
-
-// 타이핑 시퀀스 정의
-// deleteFirst: true면 이전 텍스트를 지우고 새로 타이핑
+// Typing sequence configuration
 const typingSequence = [
   { main: 'Hello!', sub: '' },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: '' },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a front-end developer</strong>" },
-  { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong>", deleteFirst: true },
+  { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong>", replaceRange: { from: 2, to: 11, newText: 'full-stack' } },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong><br>with 4 years of experience" },
 ];
 
-// 설정값
-const typingSpeed = 50;        // 타이핑 속도 (ms)
-const deleteSpeed = 30;        // 삭제 속도 (ms)
-const pauseBetweenSteps = 1000; // 단계 사이 대기 시간
-const pauseBeforeRestart = 3000; // 재시작 전 대기 시간
+// Settings
+const typingSpeed = 100;
+const deleteSpeed = 50;
+const cursorMoveSpeed = 50;
+const pauseBetweenSteps = 1000;
+const loopDelay = 3000;
+
+let currentStep = 0;
+let isTyping = false;
+
+// DOM elements
+let mainElement, subElement, subAfterElement, mainCursor, subCursor;
 
 /**
- * [핵심 포인트 2] 커서 위치 전환
- * 타이핑 중인 요소로 커서를 이동
+ * Extract plain text from HTML string
  */
-function moveCursorTo(target) {
-  if (target === 'main') {
-    cursorMain.style.display = 'inline';
-    cursorSub.style.display = 'none';
-  } else {
-    cursorMain.style.display = 'none';
-    cursorSub.style.display = 'inline';
-  }
+function getPlainText(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+  return temp.textContent || temp.innerText || '';
 }
 
 /**
- * HTML 태그를 제거하고 순수 텍스트만 반환
- * 글자 수 계산에 사용
+ * Build HTML up to a specific character position (inclusive)
+ * Preserves HTML tags properly
  */
-function stripHtml(html) {
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || '';
-}
-
-/**
- * [핵심 포인트 1] HTML 태그를 보존하면서 특정 글자 수까지만 반환
- *
- * 예: buildHtmlUpToChar("<strong>Hello</strong>", 3)
- *     -> "<strong>Hel</strong>"
- *
- * 동작 원리:
- * 1. 문자열을 순회하면서 '<' 를 만나면 태그로 인식
- * 2. 태그는 통째로 result에 추가 (글자 수에 포함 안 함)
- * 3. 일반 문자는 하나씩 추가하면서 카운트
- * 4. charLimit에 도달하면 중단
- * 5. 열린 태그가 있으면 닫아줌 (HTML 깨짐 방지)
- */
-function buildHtmlUpToChar(html, charLimit) {
+function buildHtmlUpToChar(html, charIndex) {
   let result = '';
   let charCount = 0;
-  let i = 0;
-  const openTags = []; // 열린 태그 스택
+  let inTag = false;
+  let tagBuffer = '';
+  const openTags = [];
 
-  while (i < html.length && charCount < charLimit) {
-    if (html[i] === '<') {
-      // 태그 발견 - 태그 전체를 추출
-      const tagEnd = html.indexOf('>', i);
-      const tag = html.substring(i, tagEnd + 1);
+  for (let i = 0; i < html.length; i++) {
+    const char = html[i];
 
-      if (tag.startsWith('</')) {
-        // 닫는 태그: </strong>
-        openTags.pop();
-        result += tag;
-      } else if (tag.endsWith('/>') || tag.startsWith('<br')) {
-        // 자체 닫힘 태그: <br>, <img />
-        result += tag;
-      } else {
-        // 여는 태그: <strong class='...'>
-        const tagName = tag.match(/<(\w+)/)?.[1];
-        if (tagName) openTags.push(tagName);
-        result += tag;
+    if (char === '<') {
+      inTag = true;
+      tagBuffer = '<';
+      continue;
+    }
+
+    if (inTag) {
+      tagBuffer += char;
+      if (char === '>') {
+        inTag = false;
+        // Check if opening, closing, or self-closing tag
+        if (tagBuffer.startsWith('</')) {
+          openTags.pop();
+        } else if (!tagBuffer.endsWith('/>') && !tagBuffer.startsWith('<br')) {
+          const tagMatch = tagBuffer.match(/<(\w+)/);
+          if (tagMatch) {
+            openTags.push(tagMatch[1]);
+          }
+        }
+        result += tagBuffer;
+        tagBuffer = '';
       }
-      i = tagEnd + 1;
-    } else {
-      // 일반 문자 - 카운트하면서 추가
-      result += html[i];
+      continue;
+    }
+
+    if (charCount <= charIndex) {
+      result += char;
       charCount++;
-      i++;
+    } else {
+      break;
     }
   }
 
-  // 열린 태그 닫기 (HTML 유효성 유지)
-  for (let j = openTags.length - 1; j >= 0; j--) {
-    result += `</${openTags[j]}>`;
+  // Close any open tags
+  for (let i = openTags.length - 1; i >= 0; i--) {
+    result += `</${openTags[i]}>`;
   }
 
   return result;
 }
 
 /**
- * [핵심 포인트 3, 4] 타이핑 효과
- * startFrom: 이 위치부터 타이핑 시작 (이어서 타이핑할 때 사용)
+ * Build HTML after a specific character position
+ * Preserves HTML tags properly
  */
-async function typeText(element, html, startFrom = 0) {
-  const plainText = stripHtml(html);
+function buildHtmlAfterChar(html, charIndex) {
+  let result = '';
+  let charCount = 0;
+  let inTag = false;
+  let tagBuffer = '';
+  const openTags = [];
+  let foundStart = false;
 
-  for (let i = startFrom; i <= plainText.length; i++) {
-    const displayHtml = buildHtmlUpToChar(html, i);
-    element.innerHTML = displayHtml;
-    await sleep(typingSpeed);
+  // First pass: find all tags that should be open at charIndex
+  for (let i = 0; i < html.length; i++) {
+    const char = html[i];
+
+    if (char === '<') {
+      inTag = true;
+      tagBuffer = '<';
+      continue;
+    }
+
+    if (inTag) {
+      tagBuffer += char;
+      if (char === '>') {
+        inTag = false;
+        if (charCount <= charIndex) {
+          if (tagBuffer.startsWith('</')) {
+            openTags.pop();
+          } else if (!tagBuffer.endsWith('/>') && !tagBuffer.startsWith('<br')) {
+            const tagMatch = tagBuffer.match(/<(\w+)/);
+            if (tagMatch) {
+              openTags.push(tagMatch[1]);
+            }
+          }
+        }
+        tagBuffer = '';
+      }
+      continue;
+    }
+
+    charCount++;
   }
-  element.innerHTML = html;
+
+  // Add opening tags that should wrap the remaining content
+  for (const tag of openTags) {
+    result += `<${tag}>`;
+  }
+
+  // Second pass: get content after charIndex
+  charCount = 0;
+  inTag = false;
+  let afterContent = '';
+
+  for (let i = 0; i < html.length; i++) {
+    const char = html[i];
+
+    if (char === '<') {
+      inTag = true;
+      tagBuffer = '<';
+      continue;
+    }
+
+    if (inTag) {
+      tagBuffer += char;
+      if (char === '>') {
+        inTag = false;
+        if (foundStart) {
+          afterContent += tagBuffer;
+        }
+        tagBuffer = '';
+      }
+      continue;
+    }
+
+    if (charCount > charIndex) {
+      if (!foundStart) {
+        foundStart = true;
+      }
+      afterContent += char;
+    }
+    charCount++;
+  }
+
+  result += afterContent;
+  return result;
 }
 
 /**
- * 삭제 효과 (타이핑의 역순)
+ * Insert text before closing tag in HTML string
  */
-async function deleteText(element, keepChars = 0) {
-  const currentHtml = element.innerHTML;
-  const plainText = stripHtml(currentHtml);
+function insertTextBeforeClosingTag(html, textToInsert) {
+  // Find the last closing tag position
+  const closingTagMatch = html.match(/<\/\w+>$/);
+  if (closingTagMatch) {
+    const insertPos = html.lastIndexOf(closingTagMatch[0]);
+    return html.slice(0, insertPos) + textToInsert + html.slice(insertPos);
+  }
+  return html + textToInsert;
+}
 
-  for (let i = plainText.length; i >= keepChars; i--) {
-    const displayHtml = buildHtmlUpToChar(currentHtml, i);
-    element.innerHTML = displayHtml;
+/**
+ * Type text character by character
+ */
+async function typeText(element, cursor, targetHtml, currentHtml = '') {
+  const targetText = getPlainText(targetHtml);
+  const currentText = getPlainText(currentHtml);
+
+  cursor.style.display = 'inline';
+
+  for (let i = currentText.length; i < targetText.length; i++) {
+    element.innerHTML = buildHtmlUpToChar(targetHtml, i);
+    await sleep(typingSpeed);
+  }
+}
+
+/**
+ * Delete text character by character
+ */
+async function deleteText(element, cursor, targetHtml, currentHtml) {
+  const currentText = getPlainText(currentHtml);
+  const targetText = getPlainText(targetHtml);
+
+  cursor.style.display = 'inline';
+
+  for (let i = currentText.length - 1; i >= targetText.length; i--) {
+    element.innerHTML = buildHtmlUpToChar(currentHtml, i - 1);
     await sleep(deleteSpeed);
   }
 }
 
 /**
- * [핵심 포인트 4] Promise 기반 딜레이
+ * Move cursor from end to a specific position, then delete a range
+ */
+async function deleteTextRange(element, subAfter, cursor, currentHtml, fromChar, toChar) {
+  const plainText = getPlainText(currentHtml);
+  cursor.style.display = 'inline';
+
+  // Move cursor from end to toChar position (character by character)
+  for (let pos = plainText.length - 1; pos >= toChar; pos--) {
+    element.innerHTML = buildHtmlUpToChar(currentHtml, pos);
+    subAfter.innerHTML = buildHtmlAfterChar(currentHtml, pos);
+    await sleep(cursorMoveSpeed);
+  }
+
+  // Delete characters from toChar back to fromChar
+  for (let pos = toChar - 1; pos >= fromChar; pos--) {
+    const beforeHtml = buildHtmlUpToChar(currentHtml, pos);
+    const afterHtml = buildHtmlAfterChar(currentHtml, toChar);
+    element.innerHTML = beforeHtml;
+    subAfter.innerHTML = afterHtml;
+    await sleep(deleteSpeed);
+  }
+
+  return {
+    before: buildHtmlUpToChar(currentHtml, fromChar - 1),
+    after: buildHtmlAfterChar(currentHtml, toChar)
+  };
+}
+
+/**
+ * Type text at a specific position (with text after cursor)
+ */
+async function typeTextRange(element, subAfter, cursor, beforeHtml, afterHtml, newText) {
+  cursor.style.display = 'inline';
+
+  for (let i = 0; i < newText.length; i++) {
+    const textSoFar = newText.slice(0, i + 1);
+    element.innerHTML = insertTextBeforeClosingTag(beforeHtml, textSoFar);
+    await sleep(typingSpeed);
+  }
+
+  // Merge back into single element
+  element.innerHTML = beforeHtml.replace(/<\/strong>$/, '') + newText + afterHtml.replace(/^<strong[^>]*>/, '');
+
+  // Recalculate proper merged HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = beforeHtml;
+  const beforeText = tempDiv.textContent;
+  tempDiv.innerHTML = afterHtml;
+  const afterText = tempDiv.textContent;
+
+  // Build final merged HTML
+  const fullText = beforeText + newText + afterText;
+  const targetHtml = `<strong class='home__title--strong'>${fullText}</strong>`;
+  element.innerHTML = targetHtml;
+  subAfter.innerHTML = '';
+}
+
+/**
+ * Sleep utility
  */
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
- * 메인 애니메이션 루프
+ * Process a single step in the sequence
  */
-async function runTypingAnimation() {
-  while (true) {
-    for (let i = 0; i < typingSequence.length; i++) {
-      const step = typingSequence[i];
-      const prevStep = i > 0 ? typingSequence[i - 1] : { main: '', sub: '' };
+async function processStep(step, prevStep) {
+  const { main, sub, replaceRange } = step;
+  const prevMain = prevStep?.main || '';
+  const prevSub = prevStep?.sub || '';
 
-      // 메인 텍스트 처리
-      if (step.main !== prevStep.main) {
-        moveCursorTo('main');
-        const prevMainPlain = stripHtml(prevStep.main);
-        const currentMainPlain = stripHtml(step.main);
+  // Handle main text changes
+  if (main !== prevMain) {
+    const mainText = getPlainText(main);
+    const prevMainText = getPlainText(prevMain);
 
-        // [핵심 포인트 3] 이어서 타이핑 가능한지 확인
-        if (currentMainPlain.startsWith(prevMainPlain)) {
-          // 이전 텍스트로 시작하면 -> 이어서 타이핑
-          await typeText(typingText, step.main, prevMainPlain.length);
+    if (mainText.length > prevMainText.length) {
+      await typeText(mainElement, mainCursor, main, prevMain);
+    } else if (mainText.length < prevMainText.length) {
+      await deleteText(mainElement, mainCursor, main, prevMain);
+    }
+  }
+
+  // Handle sub text changes
+  if (sub !== prevSub) {
+    if (replaceRange) {
+      // Partial replacement with cursor movement
+      const { from, to, newText } = replaceRange;
+      const result = await deleteTextRange(subElement, subAfterElement, subCursor, prevSub, from, to);
+      await typeTextRange(subElement, subAfterElement, subCursor, result.before, result.after, newText);
+    } else {
+      const subText = getPlainText(sub);
+      const prevSubText = getPlainText(prevSub);
+
+      if (subText.length > prevSubText.length) {
+        // Check if it's appending to existing text
+        if (sub.includes(prevSub.replace(/<\/strong>$/, '').replace(/<strong[^>]*>$/, ''))) {
+          await typeText(subElement, subCursor, sub, prevSub);
         } else {
-          // 다른 텍스트면 -> 지우고 새로 타이핑
-          await deleteText(typingText);
-          await typeText(typingText, step.main);
+          await typeText(subElement, subCursor, sub, prevSub);
         }
-      }
-
-      // 서브 텍스트 처리
-      if (step.sub !== prevStep.sub) {
-        moveCursorTo('sub');
-
-        if (step.deleteFirst && prevStep.sub) {
-          await deleteText(typingTextSub);
-        }
-
-        const prevSubPlain = step.deleteFirst ? '' : stripHtml(prevStep.sub);
-        const currentSubPlain = stripHtml(step.sub);
-
-        if (!step.deleteFirst && currentSubPlain.startsWith(prevSubPlain)) {
-          await typeText(typingTextSub, step.sub, prevSubPlain.length);
-        } else {
-          if (!step.deleteFirst && prevStep.sub) {
-            await deleteText(typingTextSub);
-          }
-          await typeText(typingTextSub, step.sub);
-        }
-      }
-
-      // 마지막 단계면 전체 삭제 후 재시작
-      if (i === typingSequence.length - 1) {
-        await sleep(pauseBeforeRestart);
-        moveCursorTo('sub');
-        await deleteText(typingTextSub);
-        moveCursorTo('main');
-        await deleteText(typingText);
-        await sleep(500);
-      } else {
-        await sleep(pauseBetweenSteps);
+      } else if (subText.length < prevSubText.length) {
+        await deleteText(subElement, subCursor, sub, prevSub);
       }
     }
   }
+
+  // Hide cursors when done
+  mainCursor.style.display = 'none';
+  subCursor.style.display = sub ? 'inline' : 'none';
 }
 
-// 애니메이션 시작
-runTypingAnimation();
+/**
+ * Run the full typing sequence
+ */
+async function runSequence() {
+  if (isTyping) return;
+  isTyping = true;
+
+  // Forward sequence
+  for (let i = 0; i < typingSequence.length; i++) {
+    currentStep = i;
+    const prevStep = i > 0 ? typingSequence[i - 1] : null;
+    await processStep(typingSequence[i], prevStep);
+    await sleep(pauseBetweenSteps);
+  }
+
+  // Wait before restarting
+  await sleep(loopDelay);
+
+  // Reset and restart
+  mainElement.innerHTML = '';
+  subElement.innerHTML = '';
+  subAfterElement.innerHTML = '';
+  isTyping = false;
+
+  runSequence();
+}
+
+/**
+ * Initialize typing effect
+ */
+function init() {
+  mainElement = document.querySelector('.typing-text');
+  subElement = document.querySelector('.typing-text-sub');
+  subAfterElement = document.querySelector('.typing-text-sub-after');
+  mainCursor = document.querySelector('.typing-cursor--main');
+  subCursor = document.querySelector('.typing-cursor--sub');
+
+  if (!mainElement || !subElement) {
+    console.error('Typing effect elements not found');
+    return;
+  }
+
+  // Create cursor elements if they don't exist
+  if (!mainCursor) {
+    mainCursor = document.createElement('span');
+    mainCursor.className = 'typing-cursor typing-cursor--main';
+    mainCursor.textContent = '|';
+    mainElement.parentNode.insertBefore(mainCursor, mainElement.nextSibling);
+  }
+
+  if (!subCursor) {
+    subCursor = document.createElement('span');
+    subCursor.className = 'typing-cursor typing-cursor--sub';
+    subCursor.textContent = '|';
+    subCursor.style.display = 'none';
+    if (subAfterElement) {
+      subAfterElement.parentNode.insertBefore(subCursor, subAfterElement);
+    } else {
+      subElement.parentNode.insertBefore(subCursor, subElement.nextSibling);
+    }
+  }
+
+  // Create sub-after element if it doesn't exist
+  if (!subAfterElement) {
+    subAfterElement = document.createElement('span');
+    subAfterElement.className = 'typing-text-sub-after';
+    subCursor.parentNode.insertBefore(subAfterElement, subCursor.nextSibling);
+  }
+
+  runSequence();
+}
+
+// Start on DOM load
+document.addEventListener('DOMContentLoaded', init);
