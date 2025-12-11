@@ -42,3 +42,5 @@ navbarToggle.addEventListener( 'click', () => {
 navbarMenu.addEventListener('click', () => {
   navbarMenu.classList.remove('open');
 });
+
+// Typing Effect는 typing-effect.js로 분리됨

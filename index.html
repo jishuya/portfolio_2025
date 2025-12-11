@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modal.css">
     <script type="module" src="src/main.js" defer></script>
+    <script src="src/typing-effect.js" defer></script>
     <script type="module" src="src/projects.js" defer></script>
     <script type="module" src="src/active_menu.js" defer></script>
     <script src="src/modal.js" defer></script> 
@@ -58,9 +59,12 @@
         <section id="home">
             <div class="home__container">
                 <img class="home__avatar" src="images/profile-bg.png" alt="jishu's profile">
-                <h2 class="home__title">Hello! I&#39;m<strong class="home__title--strong"> Jisoo,</strong></h2>
-                <h2 class="home__title"><strong class="home__title--strong">a full-stack developer</strong><h2>
-                <h2 class="home__title">with 4 years of experience</h2>
+                <h2 class="home__title">
+                    <span class="typing-text"></span><span class="typing-cursor typing-cursor--main">|</span>
+                </h2>
+                <h2 class="home__title home__title--sub">
+                    <span class="typing-text-sub"></span><span class="typing-cursor typing-cursor--sub" style="display:none;">|</span>
+                </h2>
                 <p class="home__description"> I'm passionate about solving everyday problems through technology and building services that deliver real value to users.</p>
                 <a class="home__contact" href="#contact">Contact me</a>
             </div>

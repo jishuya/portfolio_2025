@@ -164,6 +164,20 @@ button:focus {
 .home__title {
   font-size: 3rem;
   margin-bottom: 1rem;
+  min-height: 3.5rem;
+}
+
+.home__title--sub {
+  min-height: 3.5rem;
+}
+
+.typing-cursor {
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .home__title--strong {
@@ -539,6 +553,10 @@ button:focus {
     display: flex;
   }
 
+  .header:has(.header__menu.open) {
+    background-color: var(--color-primary);
+  }
+
   .header__nav {
     width: 100%;
   }
@@ -558,6 +576,7 @@ button:focus {
   }
 
   .major {
+    width: 100%;
     max-width: 25rem;
   }
 
