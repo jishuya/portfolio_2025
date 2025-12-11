@@ -322,6 +322,12 @@ button:focus {
 .bar__value {
   height: 3px;
   background-color: var(--color-accent);
+  width: 0;
+  transition: width 1s ease-out;
+}
+
+.bar__value.animate {
+  /* width is set dynamically via JS */
 }
 
 /* Work */
@@ -586,6 +592,11 @@ button:focus {
 
   .skills {
     grid-template-columns: 1fr;
+  }
+
+  .skills__tools,
+  .skills__etc {
+    padding-top: 0;
   }
 
   .categories {
