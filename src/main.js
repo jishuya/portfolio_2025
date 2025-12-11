@@ -1,34 +1,29 @@
 
 'use strict';
 
-// "Change the header from transparent to dark on scroll."
+// DOM Elements
 const header = document.querySelector('.header');
-const hearderHeight = header.getBoundingClientRect().height;
+const headerHeight = header.getBoundingClientRect().height;
+const home = document.querySelector('.home__container');
+const homeHeight = home.offsetHeight;
+const arrowUp = document.querySelector('.arrow-up');
 
+// 스크롤 이벤트 통합 (성능 최적화)
 document.addEventListener('scroll', () => {
-    if (window.scrollY > hearderHeight) {
+    const scrollY = window.scrollY;
+
+    // Header: 스크롤 시 배경색 변경
+    if (scrollY > headerHeight) {
         header.classList.add('header--dark');
     } else {
         header.classList.remove('header--dark');
-    } 
-} )
+    }
 
-// Home 섹션을 아래로 스크롤시 글자 투명하게 처리함
-const home = document.querySelector('.home__container');
-const homeHeight = home.offsetHeight;
+    // Home: 스크롤 시 투명하게 처리
+    home.style.opacity = 1 - scrollY / homeHeight;
 
-document.addEventListener('scroll', () => {
-    home.style.opacity = 1 - window.scrollY / homeHeight;
-})
-
-// Arrow up버튼을 아래로 스크롤시 투명하게 처리함
-const arrowUp = document.querySelector('.arrow-up');
-document.addEventListener('scroll', () => {
-  if (window.scrollY > homeHeight / 2) {
-    arrowUp.style.opacity = 1;
-  } else {
-    arrowUp.style.opacity = 0;
-  }
+    // Arrow up: 스크롤 시 표시/숨김
+    arrowUp.style.opacity = scrollY > homeHeight / 2 ? 1 : 0;
 });
 
 // Navbar 토글버튼 클릭 처리
