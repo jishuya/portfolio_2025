@@ -148,10 +148,12 @@ button:focus {
 
 /* Home */
 #home {
+  position: relative;
   background-color: var(--color-primary);
   color: var(--color-text);
   padding: 5rem 1rem;
   padding-top: 7rem;
+  padding-bottom: 6rem;
   text-align: center;
 }
 
@@ -207,6 +209,22 @@ button:focus {
   background-color: transparent;
   color: var(--color-text);
   outline: 2px solid var(--color-accent);
+}
+
+/* Home Wave Divider */
+.home__wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.home__wave svg {
+  display: block;
+  width: 100%;
+  height: 80px;
 }
 
 /* About */
@@ -373,8 +391,26 @@ button:focus {
 
 /* Work */
 #work {
+  position: relative;
   background-color: var(--color-primary);
   color: var(--color-text);
+  padding-bottom: 6rem;
+}
+
+/* Work Wave Divider */
+.work__wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.work__wave svg {
+  display: block;
+  width: 100%;
+  height: 80px;
 }
 
 .categories {
