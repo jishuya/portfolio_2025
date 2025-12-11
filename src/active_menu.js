@@ -1,6 +1,6 @@
 'use strict';
 
-const sectionIds = ['#home', '#about', '#skills', '#work', '#testimonial', '#contact'];
+const sectionIds = ['#home', '#about', '#skills', '#work', '#contact'];
 // section 태그
 const sections = sectionIds.map((id) => document.querySelector(id));
 // navigation 태그
