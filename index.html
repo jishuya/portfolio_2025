@@ -19,11 +19,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
      <script src="https://kit.fontawesome.com/5370afdb2f.js" crossorigin="anonymous"></script>
+     <!-- Iconify -->
+     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+     <!-- Vanilla Tilt -->
+     <script src="https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
      <!-- javascript, css -->
     <link rel="stylesheet" href="css/style.css">
-    <script type="module" src="src/main.js" defer></script> 
-    <script type="module" src="src/projects.js" defer></script> 
-    <script type="module" src="src/active_menu.js" defer></script> 
+    <link rel="stylesheet" href="css/modal.css">
+    <script type="module" src="src/main.js" defer></script>
+    <script type="module" src="src/projects.js" defer></script>
+    <script type="module" src="src/active_menu.js" defer></script>
+    <script src="src/modal.js" defer></script> 
 </head>
 <body>
     <!-- Header -->
@@ -188,7 +194,7 @@
                 <li class="project" data-type="front-end back-end">
                 <a href="#" target="_blank">
                     <img
-                    src="images/projects/youtube.png"
+                    src="images/projects/home/tmsv2.png"
                     alt="project1"
                     class="project__img"
                     />
@@ -201,7 +207,7 @@
                 <li class="project" data-type="front-end">
                 <a href="#" target="_blank">
                     <img
-                    src="images/projects/youtube.png"
+                    src="images/projects/home/tmsv3.png"
                     alt="project2"
                     class="project__img"
                     />
@@ -214,7 +220,7 @@
                 <li class="project" data-type="front-end back-end">
                 <a href="#" target="_blank">
                     <img
-                    src="images/projects/youtube.png"
+                    src="images/projects/home/tas.png"
                     alt="project3"
                     class="project__img"
                     />
@@ -227,7 +233,7 @@
                 <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
-                    src="images/projects/youtube.png"
+                    src="images/projects/home/tns.png"
                     alt="project4"
                     class="project__img"
                     />
@@ -240,7 +246,7 @@
                 <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
-                    src="images/projects/youtube.png"
+                    src="images/projects/home/talk100.png"
                     alt="project5"
                     class="project__img"
                     />
@@ -253,7 +259,7 @@
                 <li class="project" data-type="back-end">
                 <a href="#" target="_blank">
                     <img
-                    src="images/projects/youtube.png"
+                    src="images/projects/home/hotube.png"
                     alt="project6"
                     class="project__img"
                     />
@@ -364,6 +370,63 @@
             </a>
         </aside>
     </main>
+
+    <!-- Project Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal__overlay"></div>
+        <div class="modal__content">
+            <button class="modal__close" aria-label="Close modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Navigation Arrows -->
+            <button class="modal__nav modal__nav--prev" aria-label="Previous page">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="modal__nav modal__nav--next" aria-label="Next page">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- Slides Container -->
+            <div class="modal__slides">
+                <!-- Page 1: Project Info -->
+                <div class="modal__slide modal__slide--active">
+                    <img class="modal__img" src="" alt="Project screenshot">
+                    <div class="modal__body">
+                        <h3 class="modal__title"></h3>
+                        <div class="modal__info">
+                            <span class="modal__info-item"><i class="fa-solid fa-users"></i> <span class="modal__team"></span></span>
+                            <span class="modal__info-item"><i class="fa-solid fa-briefcase"></i> <span class="modal__role"></span></span>
+                        </div>
+                        <p class="modal__deployed"></p>
+                        <p class="modal__description"></p>
+                        <a class="modal__link" href="#" target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Site
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Page 2: Implementation Details -->
+                <div class="modal__slide">
+                    <img class="modal__img modal__img--details" src="" alt="Project screenshot 2">
+                    <div class="modal__body modal__body--details">
+                        <div class="modal__tech modal__tech--page2">
+                            <h4>Tech Stack</h4>
+                            <ul class="modal__tech-list modal__tech-list--page2"></ul>
+                        </div>
+                        <h3 class="modal__details-title"><iconify-icon icon="tabler:code" class="modal__details-icon"></iconify-icon> 프로젝트 구현 기술</h3>
+                        <ul class="modal__details-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Indicators -->
+            <div class="modal__indicators">
+                <span class="modal__indicator modal__indicator--active"></span>
+                <span class="modal__indicator"></span>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
      <footer id="contact" class="section">
       <div class="max-container">

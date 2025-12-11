@@ -597,3 +597,13 @@ button:focus {
     right: 1.5rem;
   }
 }
+
+/* Project card tilt effect */
+.project {
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.project a {
+  pointer-events: none;
+}
