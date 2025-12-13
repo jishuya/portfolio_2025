@@ -215,7 +215,7 @@ button:focus {
 /* Home Wave Divider */
 .home__wave {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   width: 100%;
   overflow: hidden;
@@ -401,7 +401,7 @@ button:focus {
 /* Work Wave Divider */
 .work__wave {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   width: 100%;
   overflow: hidden;
@@ -647,12 +647,7 @@ button:focus {
   }
 
   #home {
-    padding-bottom: 3rem;
-  }
-
-  .home__wave,
-  .work__wave {
-    display: none;
+    padding-bottom: 6rem;
   }
 
   .home__title {
