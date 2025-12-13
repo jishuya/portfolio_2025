@@ -331,6 +331,7 @@
   background-color: var(--color-accent);
   color: var(--color-black);
   padding: 0.8rem 1.5rem;
+  font-size: 1rem;
   border-radius: 8px;
   font-weight: bold;
   transition: all 0.2s ease;
@@ -421,4 +422,121 @@
 
 .confirm-modal__btn--full {
   width: 100%;
+}
+
+/* Tablet screens */
+@media screen and (max-width: 768px) {
+  .modal__title {
+    font-size: 1.6rem;
+  }
+
+  .modal__info {
+    font-size: 0.85rem;
+  }
+
+  .modal__deployed {
+    font-size: 0.85rem;
+  }
+
+  .modal__description {
+    font-size: 0.95rem;
+  }
+
+  .modal__tech h4 {
+    font-size: 0.95rem;
+  }
+
+  .modal__tech-list li {
+    font-size: 0.8rem;
+  }
+
+  .modal__details-title {
+    font-size: 1.3rem;
+  }
+
+  .modal__details-list li {
+    font-size: 0.9rem;
+  }
+
+  .modal__link {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.3rem;
+  }
+
+  .confirm-modal__btn {
+    font-size: 0.95rem;
+    padding: 0.65rem 1.3rem;
+  }
+}
+
+/* iPhone SE and smaller screens */
+@media screen and (max-width: 375px) {
+  .modal__close {
+    font-size: 1.2rem;
+  }
+
+  .modal__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .modal__body {
+    padding: 1rem;
+  }
+
+  .modal__body--details {
+    padding: 1rem;
+  }
+
+  .modal__title {
+    font-size: 1.4rem;
+  }
+
+  .modal__info {
+    font-size: 0.8rem;
+    gap: 1rem;
+  }
+
+  .modal__deployed {
+    font-size: 0.8rem;
+  }
+
+  .modal__description {
+    font-size: 0.85rem;
+  }
+
+  .modal__tech h4 {
+    font-size: 0.85rem;
+  }
+
+  .modal__tech-list li {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .modal__details-title {
+    font-size: 1.2rem;
+  }
+
+  .modal__details-icon {
+    font-size: 1.3rem;
+  }
+
+  .modal__details-list li {
+    font-size: 0.85rem;
+  }
+
+  .modal__link {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .confirm-modal__message {
+    font-size: 0.85rem;
+  }
+
+  .confirm-modal__btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+  }
 }
