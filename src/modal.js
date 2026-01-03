@@ -113,6 +113,7 @@ const projectsData = {
     role: '디자인, 풀스택 개발',
     deployed: 'Netlify',
     mobileApp: true,
+    demoLogin: { id: '기타', pw: '12345!' },
     details: [
       'React 19 + Vite + Tailwind CSS 기반 반응형 SPA 개발 (다크모드, URL 상태 동기화)',
       'YouTube Data API 연동으로 영상 메타데이터 자동 추출 및 Shorts 자동 감지 로직 구현',
