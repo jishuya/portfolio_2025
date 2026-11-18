@@ -15,7 +15,7 @@ const typingSequence = [
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: '' },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a front-end developer</strong>" },
   { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong>", replaceRange: { from: 2, to: 10, newText: 'full-stack' } },
-  { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong><br>with 4 years of experience" },
+  { main: "Hello! I'm <strong class='home__title--strong'>Jisoo,</strong>", sub: "<strong class='home__title--strong'>a full-stack developer</strong>" },
 ];
 
 // Settings

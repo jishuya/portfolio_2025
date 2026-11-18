@@ -86,9 +86,9 @@ const projectsData = {
     description: "'김재우의 영어회화 100' 수강생을 위하여 교재 문장을 효과적으로 암기할 수 있도록 돕는 웹 애플리케이션입니다. 원어민 음성 청취, 개인 맞춤형 집중암기 모드, 상세 학습 리포트 기능을 핵심으로, 사용자가 자신만의 학습 패턴을 만들어 체계적으로 영어 실력을 향상시킬 수 있습니다.",
     responsive: true,
     tech: ['React', 'Vite', 'Node.js', 'Express.js', 'PostgreSQL'],
-    image: 'images/projects/home/talk100.png',
+    image: 'images/projects/work/talk100.png',
     image2: ['images/projects/talk100_2.png', 'images/projects/talk100_3.png'],
-    link: '#',
+    link: 'https://talk100.work',
     team: '1명',
     role: '디자인, 풀스택 개발',
     deployed: 'Cloudflare Pages',
@@ -106,14 +106,14 @@ const projectsData = {
     description: '비공개 YouTube 영상을 가족 구성원만 시청할 수 있도록 구성한 프라이빗 영상 플랫폼입니다. 가족의 소중한 순간을 안전하게 공유하고 감상할 수 있습니다.',
     responsive: true,
     tech: ['React', 'Firebase', 'Firestore'],
-    image: 'images/projects/home/hotube.png',
+    image: 'images/projects/work/hotube.png',
     image2: 'images/projects/hotube.png',
-    link: 'https://transcendent-cocada-9a2381.netlify.app/',
+    link: 'https://hotube.net',
     team: '1명',
     role: '디자인, 풀스택 개발',
     deployed: 'Netlify',
     mobileApp: true,
-    demoLogin: { id: '기타', pw: '12345!' },
+    demoLogin: { id: '기타', pw: 'tester', idLabel: 'id', pwLabel: '비번' },
     details: [
       'React 19 + Vite + Tailwind CSS 기반 반응형 SPA 개발 (다크모드, URL 상태 동기화)',
       'YouTube Data API 연동으로 영상 메타데이터 자동 추출 및 Shorts 자동 감지 로직 구현',
@@ -122,25 +122,75 @@ const projectsData = {
       'YouTube IFrame API 활용 영상 플레이어 및 자동 재생 기능 개발'
     ]
   },
-  'Project #7': {
-    title: 'Project #7',
-    description: 'Clone coding project focusing on HTML and CSS fundamentals. A great learning experience for understanding web layout principles.',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    image: 'images/projects/youtube.png',
-    link: '#'
+  'Hwalingo': {
+    title: 'Hwalingo',
+    description: 'Hwalingo는 AI로 외국어 문장을 분석하고, 핵심 단어를 저장해 반복 학습하는 언어 학습 앱이에요. 직독직해·번역·어휘 설명으로 문장을 이해하고, 단어 테스트와 AI 스토리로 복습할 수 있어요. 학습 시간과 숙련도를 확인하며, 획득한 XP로 캐릭터 ‘화랑이’를 성장시킬 수 있습니다.',
+    responsive: true,
+    tech: ['React 19', 'TypeScript', 'Vite', 'TanStack Query', 'Node.js', 'Express.js', 'PostgreSQL', 'OpenAI API', 'Google Cloud Vision API', 'PWA', 'Netlify · Cloudflare Tunnel · PM2'],
+    image: 'images/projects/work/hwalingo.svg',
+    phoneScreenshots: [
+      'images/projects/hwalingo01.png',
+      'images/projects/hwalingo02.png',
+      'images/projects/hwalingo03.png',
+      'images/projects/hwalingo04.png'
+    ],
+    link: 'https://hwalingo.netlify.app',
+    team: '1명',
+    role: '디자인, 풀스택 개발',
+    deployed: 'Cloudflare Pages',
+    mobileApp: true,
+    details: [
+      'React 19 + TypeScript + Vite 기반 SPA 및 모바일·태블릿·데스크톱 대응 반응형 UI 개발',
+      'TanStack Query 기반 서버 데이터 조회·캐싱 및 상태 관리',
+      'OpenAI API 연동을 통한 다국어 문장 분석, 핵심 어휘 추출, 수준별 패러프레이징 및 맞춤형 학습 스토리 생성',
+      'Google Cloud Vision API 기반 이미지 내 텍스트 추출(OCR) 기능 구현',
+      'Node.js + Express.js + TypeScript + PostgreSQL 기반 백엔드 API 서버 구축',
+      'JWT 쿠키 인증과 bcrypt 기반 비밀번호 암호화를 적용한 회원가입·로그인 기능 구현',
+      'PostgreSQL 기반 비동기 AI 분석 작업 처리 및 분석 결과 재사용 기능 구현',
+      '단어 숙련도와 간격 반복 학습 기반 복습·퀴즈 시스템 및 학습 통계 시각화 구현',
+      '서비스 워커 기반 PWA 설치 및 앱 업데이트 안내 기능 구현',
+      'Netlify(프론트엔드) + Cloudflare Tunnel(백엔드 연결) + PM2(프로세스 관리) 기반 배포 환경 구성'
+    ]
   },
-  'Project #8': {
-    title: 'Project #8',
-    description: 'Mobile-first clone coding project. Demonstrates responsive design techniques and mobile UI patterns.',
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    image: 'images/projects/youtube.png',
-    link: '#'
+  'Usagain': {
+    title: 'Usagain',
+    description: 'Usagain는 부부·커플이 다툰 뒤 감정을 정리하고 대화를 개선하도록 돕는 AI 앱입니다. AI 공감 채팅, 상대방 입장 이해, 비폭력대화 방식의 말투 변환, 녹음 대화 분석을 제공합니다. 상담 기록과 반복되는 갈등 패턴을 돌아보며 서로를 이해하고 더 부드럽게 소통하도록 돕습니다.',
+    responsive: true,
+    tech: ['React Native', 'Expo', 'Node.js', 'Express.js', 'PostgreSQL', 'Claude API', 'Naver Clova Speech'],
+    image: 'images/projects/work/usagain.svg',
+    phoneScreenshots: [
+      'images/projects/usagain01.png',
+      'images/projects/usagain02.png',
+      'images/projects/usagain03.png',
+      'images/projects/usagain04.png'
+    ],
+    link: 'https://play.google.com/store/search?q=Usagain&c=apps',
+    linkLabel: 'Google Play에서 Usagain 검색',
+    team: '1명',
+    role: '디자인, 풀스택 개발',
+    deployed: 'Cloudflare Pages',
+    mobileApp: true,
+    details: [
+      'React Native + Expo 기반 Android 앱 개발, React Navigation으로 화면 이동 구현',
+      'Claude API 기반 공감 채팅, 상대방 관점 분석 및 비폭력대화(NVC) 메시지 변환 구현',
+      '이미지 첨부를 통한 대화 스크린샷 분석 및 상담 맥락 반영',
+      'Expo AV + Naver Clova Speech 기반 대화 녹음, 음성 텍스트 변환 및 화자 분리 구현',
+      '상담 기록 기반 감정·갈등 패턴 통계 시각화 및 AI 인사이트 제공',
+      'JWT 기반 이메일 인증 및 OAuth 2.0 기반 Google·Kakao·Naver 소셜 로그인 연동',
+      'Express.js + PostgreSQL 기반 상담·녹음·사용자 관리 REST API 서버 구축',
+      'Cloudflare Tunnel로 로컬 백엔드 서버를 외부에 연결',
+      'Expo EAS 기반 Android AAB 빌드 및 Google Play 제출·심사 통과'
+    ]
   }
 };
 
 // DOM Elements
 const modal = document.getElementById('projectModal');
 const modalImg = modal.querySelector('.modal__img');
+const phoneGallery = document.createElement('div');
+phoneGallery.className = 'modal__phone-gallery';
+phoneGallery.hidden = true;
+modalImg.after(phoneGallery);
 const modalTitle = modal.querySelector('.modal__title');
 const modalDescription = modal.querySelector('.modal__description');
 const modalLink = modal.querySelector('.modal__link');
@@ -154,6 +204,10 @@ const modalDetailsList = modal.querySelector('.modal__details-list');
 const modalImgDetails = modal.querySelector('.modal__img--details');
 const modalImgDetails2 = modal.querySelector('.modal__img--details2');
 const modalImgContainer = modal.querySelector('.modal__img-container');
+const detailsPhoneGallery = document.createElement('div');
+detailsPhoneGallery.className = 'modal__phone-gallery';
+detailsPhoneGallery.hidden = true;
+modalImgContainer.after(detailsPhoneGallery);
 const modalTechListPage2 = modal.querySelector('.modal__tech-list--page2');
 const modalSlides = modal.querySelector('.modal__slides');
 const modalNavPrev = modal.querySelector('.modal__nav--prev');
@@ -210,6 +264,25 @@ function openModal(projectTitle) {
 
   modalImg.src = project.image;
   modalImg.alt = project.title;
+  phoneGallery.replaceChildren();
+  const hasPhoneScreenshots = Boolean(project.phoneScreenshots?.length);
+  phoneGallery.hidden = !hasPhoneScreenshots;
+  modalImg.hidden = hasPhoneScreenshots;
+  if (hasPhoneScreenshots) {
+    project.phoneScreenshots.forEach((src, index) => {
+      const frame = document.createElement('div');
+      frame.className = 'modal__phone-frame';
+      const screen = document.createElement('div');
+      screen.className = 'modal__phone-screen';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `${project.title} 앱 화면 ${index + 1}`;
+      img.decoding = 'async';
+      screen.appendChild(img);
+      frame.appendChild(screen);
+      phoneGallery.appendChild(frame);
+    });
+  }
 
   // Apply mobile app style for smaller image height
   if (project.mobileApp) {
@@ -221,6 +294,7 @@ function openModal(projectTitle) {
   modalTitle.textContent = project.title;
   modalDescription.textContent = project.description;
   modalLink.href = project.link;
+  modalLink.querySelector('.modal__link-label').textContent = project.linkLabel || 'Visit Site';
 
   // Show/hide additional info
   if (project.team || project.role) {
@@ -248,6 +322,14 @@ function openModal(projectTitle) {
 
   // Populate details list and second image
   hasDetails = project.details && project.details.length > 0;
+  detailsPhoneGallery.replaceChildren();
+  detailsPhoneGallery.hidden = !(hasDetails && hasPhoneScreenshots);
+  if (hasDetails && hasPhoneScreenshots) {
+    phoneGallery.childNodes.forEach(frame => {
+      detailsPhoneGallery.appendChild(frame.cloneNode(true));
+    });
+  }
+  modalImgContainer.style.display = project.image2 ? 'flex' : 'none';
   modalDetailsList.innerHTML = '';
   if (hasDetails) {
     project.details.forEach(detail => {
@@ -383,7 +465,7 @@ modalLink.addEventListener('click', (e) => {
     openSecurityModal(project.link);
   } else if (project && project.demoLogin) {
     e.preventDefault();
-    openLoginModal(project.link, project.demoLogin.id, project.demoLogin.pw);
+    openLoginModal(project.link, project.demoLogin.id, project.demoLogin.pw, project.demoLogin.idLabel, project.demoLogin.pwLabel);
   }
 });
 
@@ -415,9 +497,9 @@ const loginConfirm = loginModal.querySelector('.confirm-modal__btn--confirm');
 const loginCredentials = document.getElementById('loginCredentials');
 let currentLoginLink = '';
 
-function openLoginModal(link, id, pw) {
+function openLoginModal(link, id, pw, idLabel = 'ID', pwLabel = 'PW') {
   currentLoginLink = link;
-  loginCredentials.innerHTML = `<strong>ID:</strong> ${id}<br><strong>PW:</strong> ${pw}`;
+  loginCredentials.innerHTML = `<strong>${idLabel}:</strong> ${id}<br><strong>${pwLabel}:</strong> ${pw}`;
   loginModal.classList.add('active');
 }
 

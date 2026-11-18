@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Hwalingo</title>
+  <desc id="desc">앱 이름을 표시한 임시 대표 이미지</desc>
+  <rect width="800" height="500" rx="24" fill="#edf8f4"/>
+  <circle cx="690" cy="90" r="155" fill="#16735c" opacity=".07"/>
+  <circle cx="90" cy="470" r="180" fill="#16735c" opacity=".07"/>
+  <text x="400" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#16735c">Hwalingo</text>
+  <text x="400" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#16735c">AI Language Learning</text>
+</svg>
